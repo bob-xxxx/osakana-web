@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+  <script>
+    window.onload = function(){
+      seirenJson = tsFunc.getJson();
+      for (key in seirenJson) {
+        if (seirenJson[key].weapon) {
+          createOption(document.getElementById("select_weapon1"), seirenJson, key);
+          createOption(document.getElementById("select_weapon2"), seirenJson, key);
+        }
+        if (seirenJson[key].helmet) {
+          createOption(document.getElementById("select_helmet1"), seirenJson, key);
+          createOption(document.getElementById("select_helmet2"), seirenJson, key);
+        }
+        if (seirenJson[key].armor) {
+          createOption(document.getElementById("select_armor1"), seirenJson, key);
+          createOption(document.getElementById("select_armor2"), seirenJson, key);
+        }
+        if (seirenJson[key].shoes) {
+          createOption(document.getElementById("select_shoes1"), seirenJson, key);
+          createOption(document.getElementById("select_shoes2"), seirenJson, key);
+        }
+      }
+      
+    }
+    function createOption(select, seirenJson, key) {
+      let op = document.createElement("option");
+      op.text = seirenJson[key].name;
+      op.value = key;
+      select.appendChild(op);
+    }
+    function changeSelect(obj) {
+      seirenJson = tsFunc.getJson();
+      type = obj.id.slice( -1 );
+      gear = obj.id.slice( 0, obj.id.length - 1 );
+      if (gear === "select_weapon") {
+        // 武器1
+        // 一旦クリア
+        document.getElementById("weapon_resonance2_" + type).innerHTML = "";
+        document.getElementById("weapon_resonance3_" + type).innerHTML = "";
+        document.getElementById("weapon_resonance4_" + type).innerHTML = "";
+        document.getElementById("weapon_attack_" + type).innerHTML = "";
+        document.getElementById("weapon_defense_" + type).innerHTML = "";
+
+        document.getElementById("weapon_name_" + type).innerHTML = seirenJson[obj.value].name;
+        document.getElementById("weapon_attack_" + type).innerHTML =
+          seirenJson[obj.value].weapon.attack + " (" + seirenJson[obj.value].weapon.attack70 + ")"
+        document.getElementById("weapon_defense_" + type).innerHTML =
+          seirenJson[obj.value].weapon.defense + " (" + seirenJson[obj.value].weapon.defense70 + ")"
+        document.getElementById("weapon_leadership_" + type).innerHTML = seirenJson[obj.value].weapon.leadership;
+        document.getElementById("weapon_force_" + type).innerHTML = seirenJson[obj.value].weapon.force;
+        document.getElementById("weapon_intelligence_" + type).innerHTML = seirenJson[obj.value].weapon.intelligence;
+        document.getElementById("weapon_special_" + type).innerHTML = seirenJson[obj.value].weapon.special;
+        
+        if (seirenJson[obj.value].resonance.resonance2) {
+          document.getElementById("weapon_resonance2_" + type).innerHTML = seirenJson[obj.value].resonance.resonance2;
+        }
+        if (seirenJson[obj.value].resonance.resonance3) {
+          document.getElementById("weapon_resonance3_" + type).innerHTML = seirenJson[obj.value].resonance.resonance3;
+        }
+        if (seirenJson[obj.value].resonance.resonance4) {
+          document.getElementById("weapon_resonance4_" + type).innerHTML = seirenJson[obj.value].resonance.resonance4;
+        }
+        document.getElementById("weapon_note_" + type).innerHTML = seirenJson[obj.value].note;
+      } else if (gear === "select_helmet") {
+        // 兜1
+        // 一旦クリア
+        document.getElementById("helmet_resonance2_" + type).innerHTML = "";
+        document.getElementById("helmet_resonance3_" + type).innerHTML = "";
+        document.getElementById("helmet_resonance4_" + type).innerHTML = "";
+        document.getElementById("helmet_attack_" + type).innerHTML = "";
+        document.getElementById("helmet_defense_" + type).innerHTML = "";
+
+        document.getElementById("helmet_name_" + type).innerHTML = seirenJson[obj.value].name;
+        document.getElementById("helmet_attack_" + type).innerHTML =
+          seirenJson[obj.value].helmet.attack + " (" + seirenJson[obj.value].helmet.attack70 + ")"
+        document.getElementById("helmet_defense_" + type).innerHTML =
+          seirenJson[obj.value].helmet.defense + " (" + seirenJson[obj.value].helmet.defense70 + ")"
+        document.getElementById("helmet_leadership_" + type).innerHTML = seirenJson[obj.value].helmet.leadership;
+        document.getElementById("helmet_force_" + type).innerHTML = seirenJson[obj.value].helmet.force;
+        document.getElementById("helmet_intelligence_" + type).innerHTML = seirenJson[obj.value].helmet.intelligence;
+        document.getElementById("helmet_special_" + type).innerHTML = seirenJson[obj.value].helmet.special;
+        
+        if (seirenJson[obj.value].resonance.resonance2) {
+          document.getElementById("helmet_resonance2_" + type).innerHTML = seirenJson[obj.value].resonance.resonance2;
+        }
+        if (seirenJson[obj.value].resonance.resonance3) {
+          document.getElementById("helmet_resonance3_" + type).innerHTML = seirenJson[obj.value].resonance.resonance3;
+        }
+        if (seirenJson[obj.value].resonance.resonance4) {
+          document.getElementById("helmet_resonance4_" + type).innerHTML = seirenJson[obj.value].resonance.resonance4;
+        }
+        document.getElementById("helmet_note_" + type).innerHTML = seirenJson[obj.value].note;
+      } else if (gear === "select_armor") {
+        // 鎧
+        // 一旦クリア
+        document.getElementById("armor_resonance2_" + type).innerHTML = "";
+        document.getElementById("armor_resonance3_" + type).innerHTML = "";
+        document.getElementById("armor_resonance4_" + type).innerHTML = "";
+        document.getElementById("armor_attack_" + type).innerHTML = "";
+        document.getElementById("armor_defense_" + type).innerHTML = "";
+
+        document.getElementById("armor_name_" + type).innerHTML = seirenJson[obj.value].name;
+        document.getElementById("armor_attack_" + type).innerHTML =
+          seirenJson[obj.value].armor.attack + " (" + seirenJson[obj.value].armor.attack70 + ")"
+        document.getElementById("armor_defense_" + type).innerHTML =
+          seirenJson[obj.value].armor.defense + " (" + seirenJson[obj.value].armor.defense70 + ")"
+        document.getElementById("armor_leadership_" + type).innerHTML = seirenJson[obj.value].armor.leadership;
+        document.getElementById("armor_force_" + type).innerHTML = seirenJson[obj.value].armor.force;
+        document.getElementById("armor_intelligence_" + type).innerHTML = seirenJson[obj.value].armor.intelligence;
+        document.getElementById("armor_special_" + type).innerHTML = seirenJson[obj.value].armor.special;
+        
+        if (seirenJson[obj.value].resonance.resonance2) {
+          document.getElementById("armor_resonance2_" + type).innerHTML = seirenJson[obj.value].resonance.resonance2;
+        }
+        if (seirenJson[obj.value].resonance.resonance3) {
+          document.getElementById("armor_resonance3_" + type).innerHTML = seirenJson[obj.value].resonance.resonance3;
+        }
+        if (seirenJson[obj.value].resonance.resonance4) {
+          document.getElementById("armor_resonance4_" + type).innerHTML = seirenJson[obj.value].resonance.resonance4;
+        }
+        document.getElementById("armor_note_" + type).innerHTML = seirenJson[obj.value].note;
+      } else if (gear=== "select_shoes") {
+        // 戦靴
+        // 一旦クリア
+        document.getElementById("shoes_resonance2_" + type).innerHTML = "";
+        document.getElementById("shoes_resonance3_" + type).innerHTML = "";
+        document.getElementById("shoes_resonance4_" + type).innerHTML = "";
+        document.getElementById("shoes_attack_" + type).innerHTML = "";
+        document.getElementById("shoes_defense_" + type).innerHTML = "";
+
+        document.getElementById("shoes_name_" + type).innerHTML = seirenJson[obj.value].name;
+        document.getElementById("shoes_attack_" + type).innerHTML =
+          seirenJson[obj.value].shoes.attack + " (" + seirenJson[obj.value].shoes.attack70 + ")"
+        document.getElementById("shoes_defense_" + type).innerHTML =
+          seirenJson[obj.value].shoes.defense + " (" + seirenJson[obj.value].shoes.defense70 + ")"
+        document.getElementById("shoes_leadership_" + type).innerHTML = seirenJson[obj.value].shoes.leadership;
+        document.getElementById("shoes_force_" + type).innerHTML = seirenJson[obj.value].shoes.force;
+        document.getElementById("shoes_intelligence_" + type).innerHTML = seirenJson[obj.value].shoes.intelligence;
+        document.getElementById("shoes_special_" + type).innerHTML = seirenJson[obj.value].shoes.special;
+        
+        if (seirenJson[obj.value].resonance.resonance2) {
+          document.getElementById("shoes_resonance2_" + type).innerHTML = seirenJson[obj.value].resonance.resonance2;
+        }
+        if (seirenJson[obj.value].resonance.resonance3) {
+          document.getElementById("shoes_resonance3_" + type).innerHTML = seirenJson[obj.value].resonance.resonance3;
+        }
+        if (seirenJson[obj.value].resonance.resonance4) {
+          document.getElementById("shoes_resonance4_" + type).innerHTML = seirenJson[obj.value].resonance.resonance4;
+        }
+        document.getElementById("shoes_note_" + type).innerHTML = seirenJson[obj.value].note;
+      }
+
+      // 合計の計算
+      if (type === "1") {
+        changeSumValue(seirenJson, type);
+      } else {
+        changeSumValue(seirenJson, type);
+      }
+      
+      
+    }
+
+    function changeSumValue(seirenJson, type) {
+      weaponKey = document.getElementById("select_weapon" + type).value;
+      helmetKey = document.getElementById("select_helmet" + type).value;
+      armorKey = document.getElementById("select_armor" + type).value;
+      shoesKey = document.getElementById("select_shoes" + type).value;
+      weapon = seirenJson[weaponKey];
+      helmet = seirenJson[helmetKey];
+      armor = seirenJson[armorKey];
+      shoes = seirenJson[shoesKey];
+
+      attack = 0;
+      defense = 0;
+      leadership = 0;
+      force = 0;
+      intelligence = 0;
+      special = "";
+      if (weapon && weapon.weapon) {
+        attack += weapon.weapon.attack + weapon.weapon.attack70;
+        defense += weapon.weapon.defense + weapon.weapon.defense70;
+        leadership += weapon.weapon.leadership;
+        force += weapon.weapon.force;
+        intelligence += weapon.weapon.intelligence;
+        special += weapon.weapon.special + "<br>";
+      }
+      if (helmet && helmet.helmet) {
+        attack += helmet.helmet.attack + helmet.helmet.attack70;
+        defense += helmet.helmet.defense + helmet.helmet.defense70;
+        leadership += helmet.helmet.leadership;
+        force += helmet.helmet.force;
+        intelligence += helmet.helmet.intelligence;
+        special += helmet.helmet.special + "<br>";
+      }
+      if (armor && armor.armor) {
+        attack += armor.armor.attack + armor.armor.attack70;
+        defense += armor.armor.defense + armor.armor.defense70;
+        leadership += armor.armor.leadership;
+        force += armor.armor.force;
+        intelligence += armor.armor.intelligence;
+        special += armor.armor.special + "<br>";
+      }
+      if (shoes && shoes.shoes) {
+        attack += shoes.shoes.attack + shoes.shoes.attack70;
+        defense += shoes.shoes.defense + shoes.shoes.defense70;
+        leadership += shoes.shoes.leadership;
+        force += shoes.shoes.force;
+        intelligence += shoes.shoes.intelligence;
+        special += shoes.shoes.special;
+      }
+      // 共鳴
+      second = "";
+      third = "";
+      fourth = "";
+      keyList = [weaponKey, helmetKey, armorKey, shoesKey];
+      for (let element of keyList) {
+        if (!element) {
+          continue;
+        }
+        let count = keyList.filter(n => n === element).length;
+        console.log("===== 共鳴count = " + count);
+        if (count >= 2) {
+          if (seirenJson[element].resonance.resonance2 && second != seirenJson[element].resonance.resonance2) {
+            second += seirenJson[element].resonance.resonance2;
+          }
+        }
+        if (count >= 3) {
+          if (seirenJson[element].resonance.resonance3 && !third) {
+            third += seirenJson[element].resonance.resonance3;
+          }
+        }
+        if (count === 4) {
+          if (seirenJson[element].resonance.resonance4 && !fourth) {
+            fourth += seirenJson[element].resonance.resonance4;
+          }
+        }
+      };
+
+      document.getElementById("sum_attack_" + type).innerHTML = attack;
+      document.getElementById("sum_defense_" + type).innerHTML = defense;
+      document.getElementById("sum_leadership_" + type).innerHTML = leadership;
+      document.getElementById("sum_force_" + type).innerHTML = force;
+      document.getElementById("sum_intelligence_" + type).innerHTML = intelligence;
+      document.getElementById("sum_special_" + type).innerHTML = special;
+
+      document.getElementById("sum_resonance2_" + type).innerHTML = second;
+      document.getElementById("sum_resonance3_" + type).innerHTML = third;
+      document.getElementById("sum_resonance4_" + type).innerHTML = fourth;
+      
+    }
+  </script>
+
+
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>金精錬 性能一覧</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">金精錬 性能一覧</h1>
+      <div class="contents">
+        <h2>装備を選択①</h2>
+        <div class="item">
+          <label>武器</label>
+          <div class="cp_ipselect cp_sl052">
+            <select id="select_weapon1" onchange="changeSelect(this)";>
+              <option value="" hidden>Choose</option>
+            </select>
+          </div>
+        </div>
+        <div class="item">
+          <label>兜</label>
+          <div class="cp_ipselect cp_sl052">
+            <select id="select_helmet1" onchange="changeSelect(this)";>
+              <option value="" hidden>Choose</option>
+            </select>
+          </div>
+        </div>
+        <div class="item">
+          <label>鎧</label>
+          <div class="cp_ipselect cp_sl052">
+            <select id="select_armor1" onchange="changeSelect(this)";>
+              <option value="" hidden>Choose</option>
+            </select>
+          </div>
+        </div>
+        <div class="item">
+          <label>戦靴</label>
+          <div class="cp_ipselect cp_sl052">
+            <select id="select_shoes1" onchange="changeSelect(this)";>
+              <option value="" hidden>Choose</option>
+            </select>
+          </div>
+        </div>
+
+        <h2>装備を選択②</h2>
+        <div class="item">
+          <label>武器</label>
+          <div class="cp_ipselect cp_sl05">
+            <select id="select_weapon2" onchange="changeSelect(this)";>
+              <option value="" hidden>Choose</option>
+            </select>
+          </div>
+        </div>
+        <div class="item">
+          <label>兜</label>
+          <div class="cp_ipselect cp_sl05">
+            <select id="select_helmet2" onchange="changeSelect(this)";>
+              <option value="" hidden>Choose</option>
+            </select>
+          </div>
+        </div>
+        <div class="item">
+          <label>鎧</label>
+          <div class="cp_ipselect cp_sl05">
+            <select id="select_armor2" onchange="changeSelect(this)";>
+              <option value="" hidden>Choose</option>
+            </select>
+          </div>
+        </div>
+        <div class="item">
+          <label>戦靴</label>
+          <div class="cp_ipselect cp_sl05">
+            <select id="select_shoes2" onchange="changeSelect(this)";>
+              <option value="" hidden>Choose</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="gear-area">
+        <h2 class="gear-area__header">
+          合計能力
+        </h2>
+        <div class="gear-box__body">
+          <table>
+            <tr>
+              <th></th>
+              <th width="5%">攻撃力</th>
+              <th width="5%">防御力</th>
+              <th width="5%">統率</th>
+              <th width="5%">武力</th>
+              <th width="5%">知力</th>
+              <th width="25%">特殊</th>
+              <th width="17%">共鳴2</th>
+              <th width="16%">共鳴3</th>
+              <th width="17%">共鳴4</th>
+            </tr>
+            <tr>
+              <td>装備①</td>
+              <td id="sum_attack_1"></td>
+              <td id="sum_defense_1"></td>
+              <td id="sum_leadership_1"></td>
+              <td id="sum_force_1"></td>
+              <td id="sum_intelligence_1"></td>
+              <td id="sum_special_1"></td>
+              <td id="sum_resonance2_1"></td>
+              <td id="sum_resonance3_1"></td>
+              <td id="sum_resonance4_1"></td>
+            </tr>
+            <tr>
+              <td>装備②</td>
+              <td id="sum_attack_2"></td>
+              <td id="sum_defense_2"></td>
+              <td id="sum_leadership_2"></td>
+              <td id="sum_force_2"></td>
+              <td id="sum_intelligence_2"></td>
+              <td id="sum_special_2"></td>
+              <td id="sum_resonance2_2"></td>
+              <td id="sum_resonance3_2"></td>
+              <td id="sum_resonance4_2"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="gear-area">
+        <h2 class="gear-area__header">
+          選択能力
+        </h2>
+        <div class="gear-area__body">
+          <p class="gear-box__gear_title">装備①</p>
+          <div class="gear-boxes">
+            <div class="gear-boxes__item gear-box">
+              <div class="gear-box__header">
+                <div class="gear-box__title">武器</div>
+              </div>
+              <div class="gear-box__body">
+                <p class="gear-box__gear" id="weapon_name_1"></p>
+                <table>
+                  <tr>
+                    <th>攻撃力</th>
+                    <td id="weapon_attack_1"></td>
+                  </tr>
+                  <tr>
+                    <th>防御力</th>
+                    <td id="weapon_defense_1"></td>
+                  </tr>
+                  <tr>
+                    <th>統率</th>
+                    <td id="weapon_leadership_1"></td>
+                  </tr>
+                  <tr>
+                    <th>武力</th>
+                    <td id="weapon_force_1"></td>
+                  </tr>
+                  <tr>
+                    <th>知力</th>
+                    <td id="weapon_intelligence_1"></td>
+                  </tr>
+                  <tr>
+                    <th>特殊</th>
+                    <td id="weapon_special_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴2</th>
+                    <td id="weapon_resonance2_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴3</th>
+                    <td id="weapon_resonance3_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴4</th>
+                    <td id="weapon_resonance4_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">備考</th>
+                    <td id="weapon_note_1"></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="gear-boxes__item gear-box">
+              <div class="gear-box__header">
+                <div class="gear-box__title">兜</div>
+              </div>
+              <div class="gear-box__body">
+                <p class="gear-box__gear" id="helmet_name_1"></p>
+                <table>
+                  <tr>
+                    <th>攻撃力</th>
+                    <td id="helmet_attack_1"></td>
+                  </tr>
+                  <tr>
+                    <th>防御力</th>
+                    <td id="helmet_defense_1"></td>
+                  </tr>
+                  <tr>
+                    <th>統率</th>
+                    <td id="helmet_leadership_1"></td>
+                  </tr>
+                  <tr>
+                    <th>武力</th>
+                    <td id="helmet_force_1"></td>
+                  </tr>
+                  <tr>
+                    <th>知力</th>
+                    <td id="helmet_intelligence_1"></td>
+                  </tr>
+                  <tr>
+                    <th>特殊</th>
+                    <td id="helmet_special_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴2</th>
+                    <td id="helmet_resonance2_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴3</th>
+                    <td id="helmet_resonance3_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴4</th>
+                    <td id="helmet_resonance4_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">備考</th>
+                    <td id="helmet_note_1"></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="gear-boxes__item gear-box">
+              <div class="gear-box__header">
+                <div class="gear-box__title">鎧</div>
+              </div>
+              <div class="gear-box__body">
+                <p class="gear-box__gear" id="armor_name_1"></p>
+                <table>
+                  <tr>
+                    <th>攻撃力</th>
+                    <td id="armor_attack_1"></td>
+                  </tr>
+                  <tr>
+                    <th>防御力</th>
+                    <td id="armor_defense_1"></td>
+                  </tr>
+                  <tr>
+                    <th>統率</th>
+                    <td id="armor_leadership_1"></td>
+                  </tr>
+                  <tr>
+                    <th>武力</th>
+                    <td id="armor_force_1"></td>
+                  </tr>
+                  <tr>
+                    <th>知力</th>
+                    <td id="armor_intelligence_1"></td>
+                  </tr>
+                  <tr>
+                    <th>特殊</th>
+                    <td id="armor_special_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴2</th>
+                    <td id="armor_resonance2_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴3</th>
+                    <td id="armor_resonance3_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴4</th>
+                    <td id="armor_resonance4_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">備考</th>
+                    <td id="armor_note_1"></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="gear-boxes__item gear-box">
+              <div class="gear-box__header">
+                <div class="gear-box__title">戦靴</div>
+              </div>
+              <div class="gear-box__body">
+                <p class="gear-box__gear" id="shoes_name_1"></p>
+                <table>
+                  <tr>
+                    <th>攻撃力</th>
+                    <td id="shoes_attack_1"></td>
+                  </tr>
+                  <tr>
+                    <th>防御力</th>
+                    <td id="shoes_defense_1"></td>
+                  </tr>
+                  <tr>
+                    <th>統率</th>
+                    <td id="shoes_leadership_1"></td>
+                  </tr>
+                  <tr>
+                    <th>武力</th>
+                    <td id="shoes_force_1"></td>
+                  </tr>
+                  <tr>
+                    <th>知力</th>
+                    <td id="shoes_intelligence_1"></td>
+                  </tr>
+                  <tr>
+                    <th>特殊</th>
+                    <td id="shoes_special_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴2</th>
+                    <td id="shoes_resonance2_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴3</th>
+                    <td id="shoes_resonance3_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴4</th>
+                    <td id="shoes_resonance4_1"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">備考</th>
+                    <td id="shoes_note_1"></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <p class="gear-box__gear_title">装備②</p>
+          <div class="gear-boxes">
+            <div class="gear-boxes__item gear-box">
+              <div class="gear-box__header">
+                <div class="gear-box__title">武器</div>
+              </div>
+              <div class="gear-box__body">
+                <p class="gear-box__gear" id="weapon_name_2"></p>
+                <table>
+                  <tr>
+                    <th width="30%">攻撃力</th>
+                    <td id="weapon_attack_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">防御力</th>
+                    <td id="weapon_defense_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">統率</th>
+                    <td id="weapon_leadership_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">武力</th>
+                    <td id="weapon_force_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">知力</th>
+                    <td id="weapon_intelligence_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">特殊</th>
+                    <td id="weapon_special_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴2</th>
+                    <td id="weapon_resonance2_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴3</th>
+                    <td id="weapon_resonance3_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴4</th>
+                    <td id="weapon_resonance4_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">備考</th>
+                    <td id="weapon_note_2"></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="gear-boxes__item gear-box">
+              <div class="gear-box__header">
+                <div class="gear-box__title">兜</div>
+              </div>
+              <div class="gear-box__body">
+                <p class="gear-box__gear" id="helmet_name_2"></p>
+                <table>
+                  <tr>
+                    <th>攻撃力</th>
+                    <td id="helmet_attack_2"></td>
+                  </tr>
+                  <tr>
+                    <th>防御力</th>
+                    <td id="helmet_defense_2"></td>
+                  </tr>
+                  <tr>
+                    <th>統率</th>
+                    <td id="helmet_leadership_2"></td>
+                  </tr>
+                  <tr>
+                    <th>武力</th>
+                    <td id="helmet_force_2"></td>
+                  </tr>
+                  <tr>
+                    <th>知力</th>
+                    <td id="helmet_intelligence_2"></td>
+                  </tr>
+                  <tr>
+                    <th>特殊</th>
+                    <td id="helmet_special_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴2</th>
+                    <td id="helmet_resonance2_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴3</th>
+                    <td id="helmet_resonance3_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴4</th>
+                    <td id="helmet_resonance4_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">備考</th>
+                    <td id="helmet_note_2"></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="gear-boxes__item gear-box">
+              <div class="gear-box__header">
+                <div class="gear-box__title">鎧</div>
+              </div>
+              <div class="gear-box__body">
+                <p class="gear-box__gear" id="armor_name_2"></p>
+                <table>
+                  <tr>
+                    <th>攻撃力</th>
+                    <td id="armor_attack_2"></td>
+                  </tr>
+                  <tr>
+                    <th>防御力</th>
+                    <td id="armor_defense_2"></td>
+                  </tr>
+                  <tr>
+                    <th>統率</th>
+                    <td id="armor_leadership_2"></td>
+                  </tr>
+                  <tr>
+                    <th>武力</th>
+                    <td id="armor_force_2"></td>
+                  </tr>
+                  <tr>
+                    <th>知力</th>
+                    <td id="armor_intelligence_2"></td>
+                  </tr>
+                  <tr>
+                    <th>特殊</th>
+                    <td id="armor_special_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴2</th>
+                    <td id="armor_resonance2_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴3</th>
+                    <td id="armor_resonance3_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴4</th>
+                    <td id="armor_resonance4_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">備考</th>
+                    <td id="armor_note_2"></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="gear-boxes__item gear-box">
+              <div class="gear-box__header">
+                <div class="gear-box__title">戦靴</div>
+              </div>
+              <div class="gear-box__body">
+                <p class="gear-box__gear" id="shoes_name_2"></p>
+                <table>
+                  <tr>
+                    <th>攻撃力</th>
+                    <td id="shoes_attack_2"></td>
+                  </tr>
+                  <tr>
+                    <th>防御力</th>
+                    <td id="shoes_defense_2"></td>
+                  </tr>
+                  <tr>
+                    <th>統率</th>
+                    <td id="shoes_leadership_2"></td>
+                  </tr>
+                  <tr>
+                    <th>武力</th>
+                    <td id="shoes_force_2"></td>
+                  </tr>
+                  <tr>
+                    <th>知力</th>
+                    <td id="shoes_intelligence_2"></td>
+                  </tr>
+                  <tr>
+                    <th>特殊</th>
+                    <td id="shoes_special_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴2</th>
+                    <td id="shoes_resonance2_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴3</th>
+                    <td id="shoes_resonance3_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">共鳴4</th>
+                    <td id="shoes_resonance4_2"></td>
+                  </tr>
+                  <tr>
+                    <th width="30%">備考</th>
+                    <td id="shoes_note_2"></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div>
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSaIm3KB6cA5onGWsVH44LpvASoF0ZlyNLn95Ti9u7frzqIfMicWwQVMqWBJ4jtOUxWYhcQxkAPvNy3/pubhtml?gid=1566184531&amp;single=true&amp;widget=true&amp;headers=false" style="width:1000px; height:600px"></iframe>
+      </div> -->
+    </div>
+  </body>
+</html>
