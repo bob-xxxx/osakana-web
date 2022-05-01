@@ -1,4 +1,4 @@
-{
+var seirenJson = {
     "genbu": {
         "name": "玄武・亀紋",
         "image": "",

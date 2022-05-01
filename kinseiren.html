@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <script>
+
+
     window.onload = function(){
-      seirenJson = tsFunc.getJson();
       for (key in seirenJson) {
         if (seirenJson[key].weapon) {
           createOption(document.getElementById("select_weapon1"), seirenJson, key);
@@ -30,7 +31,6 @@
       select.appendChild(op);
     }
     function changeSelect(obj) {
-      seirenJson = tsFunc.getJson();
       type = obj.id.slice( -1 );
       gear = obj.id.slice( 0, obj.id.length - 1 );
       if (gear === "select_weapon") {
@@ -214,15 +214,20 @@
       third = "";
       fourth = "";
       keyList = [weaponKey, helmetKey, armorKey, shoesKey];
+      resonance2KeyList = []
       for (let element of keyList) {
         if (!element) {
           continue;
         }
         let count = keyList.filter(n => n === element).length;
-        console.log("===== 共鳴count = " + count);
         if (count >= 2) {
-          if (seirenJson[element].resonance.resonance2 && second != seirenJson[element].resonance.resonance2) {
+          if (seirenJson[element].resonance.resonance2
+              && !resonance2KeyList.includes(element)) {
+            if (second) {
+              second += "<br>";
+            }
             second += seirenJson[element].resonance.resonance2;
+            resonance2KeyList.push(element);
           }
         }
         if (count >= 3) {
@@ -252,16 +257,22 @@
   </script>
 
 
-
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/reset.css">
+    <script src="json/kinseiren.js" ></script>
     <title>金精錬 性能一覧</title>
   </head>
   <body>
     <div class="container">
       <h1 class="title">金精錬 性能一覧</h1>
+      <div class="contents">
+        <p> <b>使い方</b></p>
+        <p>新三国志の精錬装備の合計能力を比較します。<br>装備①(青)と装備②(赤)を選択すると合計能力が表示されます。</p>
+      </div>
       <div class="contents">
         <h2>装備を選択①</h2>
         <div class="item">
@@ -793,9 +804,6 @@
         </div>
       </div>
 
-      <!-- <div>
-        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSaIm3KB6cA5onGWsVH44LpvASoF0ZlyNLn95Ti9u7frzqIfMicWwQVMqWBJ4jtOUxWYhcQxkAPvNy3/pubhtml?gid=1566184531&amp;single=true&amp;widget=true&amp;headers=false" style="width:1000px; height:600px"></iframe>
-      </div> -->
     </div>
   </body>
 </html>
