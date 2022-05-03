@@ -2,6 +2,9 @@
   margin-top: 50px;
   text-align: center;
 }
+.container2 {
+  text-align: center;
+}
 
 .title {
   font-size: 30px;
@@ -31,9 +34,19 @@
   overflow: hidden;
   padding: 20px 20px;
 }
+.contents2 {
+  display: inline-block;
+  overflow: hidden;
+  padding: 10px 5px;
+}
 .item {
   float: left;
   padding: 10px 20px;
+  text-align: center;
+}
+.item2 {
+  float: left;
+  padding: 10px 10px;
   text-align: center;
 }
 
@@ -113,6 +126,11 @@
 	padding: 8px 38px 8px 8px;
 	color: #ffffff;
 }
+
+
+/* ------------------------------
+gear-area
+------------------------------ */
 .gear-area {
   padding: 15px 30px;
   margin-bottom: 20px;
@@ -127,8 +145,6 @@
   padding: 10px 0px;
   border-bottom: 1px solid #ddd;
 }
-
-
 
 /* ------------------------------
 gear-boxes
@@ -151,25 +167,20 @@ gear-boxes
 /* ------------------------------
 gear-box
 ------------------------------ */
-
 .gear-box {
   border: 1px solid #ddd;
 }
-
 .gear-box__header {
   padding: 10px 5px;
   border-bottom: 1px solid #ddd;
 }
-
 .gear-box__title {
   font-size: 20px;
   font-weight: bold;
 }
-
 .gear-box__body {
   padding: 10px 5px;
 }
-
 .gear-box__gear {
   font-size: 18px;
   font-weight: bold;
@@ -181,6 +192,53 @@ gear-box
   margin-top: 25px;
   margin-bottom: 15px;
 }
+/* ------------------------------
+chinpin-area
+------------------------------ */
+.chinpin-area {
+  padding: 15px 30px;
+  margin-bottom: 20px;
+  width: 800px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+.chinpin-boxes {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  /* width: 120px; */
+  margin : 0 auto;
+}
+
+.chinpin-box {
+  border: 1px solid #ddd;
+}
+.chinpin-box_select {
+  border: 1px solid #ff0000;
+}
+.chinpin-box__item {
+  flex: 1;
+  margin-right: 0.1%;
+}
+.chinpin-box__header {
+  padding: 5px 2px;
+  border-top: 10px;
+  border-bottom: 1px solid #ddd;
+}
+.chinpin-box__title {
+  font-size: 15px;
+  font-weight: bold;
+}
+.chinpin-box__title2 {
+  font-size: 12px;
+  font-weight: bold;
+}
+.chinpin-box__busyo {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
 
 .table {
   padding: 0px 5px;
@@ -198,5 +256,97 @@ table td {/*table内のtdに対して*/
 }
 
 
+
+.nav {
+  /* margin: 20px 0px auto; */
+  /* width: 455px; */
+  width: 120%;
+  min-height: auto;
+}
+
+.nav ul {
+  position: relative;
+  padding-top: 20px; 
+}
+
+.nav li {
+  position: relative;
+  padding: 20px 3px 10px 3px; 
+  float: left; 
+  
+  text-align: center;
+  list-style-type: none; 
+}
+
+.nav li::before, .nav li::after{
+  content: '';
+  position: absolute; 
+  top: 0; 
+  right: 50%;
+  width: 50%; 
+  height: 20px;
+  border-top: 1px solid #ccc;
+}
+
+.nav li::after{
+  left: 50%;
+  right: auto; 
+  
+  border-left: 1px solid #ccc;
+}
+
+.nav li:only-child::after, .nav li:only-child::before {
+  content: '';
+  display: none;
+}
+
+.nav li:only-child{ padding-top: 0;}
+.nav li:first-child::before, .nav li:last-child::after{
+  border: 0 none;
+}
+
+.nav li:last-child::before{
+  border-right: 1px solid #ccc;
+  border-radius: 0 5px 0 0;
+}
+
+.nav li:first-child::after{
+    border-radius: 5px 0 0 0;
+}
+.nav ul ul::before{
+  content: '';
+  position: absolute; top: 0; left: 50%;
+  border-left: 1px solid #ccc;
+  width: 0; 
+  height: 20px;
+}
+
+.nav li a{
+  display: inline-block;
+  padding: 5px 10px;
+  
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #ccc;
+  font-family: arial, verdana, tahoma;
+  font-size: 11px;
+}
+
+.nav li a:hover, .nav li a:hover+ul li a {
+  color: #000;
+  background: #c8e4f8;   
+  border: 1px solid #94a0b4;
+}
+
+.nav li a:hover+ul li::after, 
+.nav li a:hover+ul li::before, 
+.nav li a:hover+ul::before, 
+.nav li a:hover+ul ul::before{
+  content: '';
+  border-color: #94a0b4;
+}
 
 

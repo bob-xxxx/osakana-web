@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<script>
+    window.onload = function () {
+        for (key in chinpinJson) {
+            let chinpinOp = document.createElement("option");
+            chinpinOp.text = key;
+            chinpinOp.value = key;
+            document.getElementById("select_chinpin").appendChild(chinpinOp);
+
+            for (i in chinpinJson[key].busyo) {
+                let busyoOp = document.createElement("option");
+                busyoOp.text = chinpinJson[key].busyo[i];
+                busyoOp.value = chinpinJson[key].busyo[i];
+                if (chinpinJson[key].busyoRank === "UR") {
+                    document.getElementById("select_busyo_ur").appendChild(busyoOp);
+                } else {
+                    document.getElementById("select_busyo_ssr").appendChild(busyoOp);
+                }
+            }
+        }
+    }
+    function changeSelect(obj) {
+        if (obj.id === "select_chinpin") {
+            // 他をクリア
+            document.getElementById("select_busyo_ur").value = "Choose";
+            document.getElementById("select_busyo_ssr").value = "Choose";
+
+            let chinpinList = [];
+
+            // 親を取得
+            parents = getParents(obj.value);
+            if (parents.length > 0) {
+                chinpinList.unshift(parents);
+                // 重複削除
+                chinpinList = uniqueList(chinpinList);
+            } else {
+                // 選択したものがトップの場合
+                chinpinList.push([{ "name": obj.value, isTop: true }]);
+            }
+            while (parents.length > 0) {
+                grandparents = [];
+                for (index in parents) {
+                    list = getParents(parents[index].name);
+                    if (list.length > 0) {
+                        for (i in list) {
+                            grandparents.push(list[i]);
+                        }
+                    } else {
+                        parents[index].isTop = true;
+                    }
+                }
+                // 重複削除
+                grandparents = uniqueList(grandparents);
+                // 先頭に追加
+                if (grandparents.length > 0) {
+                    chinpinList.unshift(grandparents);
+                }
+                parents = grandparents;
+            }
+
+            // topのみにする
+            let topChinpinList = [];
+            for (var chinpinFloor of chinpinList) {
+                for (var chinpin of chinpinFloor) {
+                    if (chinpin.isTop) {
+                        topChinpinList.push(chinpin);
+                    }
+                }
+            }
+
+            // ログ
+            let flowchart = "";
+            for (var chinpin of topChinpinList) {
+                flowchart += '<nav class="nav"><ul>';
+                flowchart += outputLine(chinpin.name, obj.value);
+                flowchart += '</ul></nav>';
+            }
+            document.getElementById("chinpinFlow").innerHTML = flowchart;
+
+        } else if (obj.id === "select_busyo_ur" || obj.id === "select_busyo_ssr") {
+            // 他をクリア
+            document.getElementById("select_chinpin").value = "Choose";
+            if (obj.id === "select_busyo_ur") {
+                document.getElementById("select_busyo_ssr").value = "Choose";
+            } else {
+                document.getElementById("select_busyo_ur").value = "Choose";
+            }
+            
+            var chinpinName = getChinpinNameByBusyo(obj.value);
+            if (!chinpinName) {
+                return;
+            }
+            
+            let flowchart = '<nav class="nav"><ul>';
+            flowchart += outputLine(chinpinName);
+            flowchart += '</ul></nav>';
+            document.getElementById("chinpinFlow").innerHTML = flowchart;
+        }
+    }
+    function getChinpinNameByBusyo(selectBusyo) {
+        for (var chinpinName in chinpinJson) {
+            for (var busyo of chinpinJson[chinpinName].busyo) {
+                if (selectBusyo === busyo) {
+                    return chinpinName;
+                }
+            }
+        }
+    }
+    function getParents(key) {
+        let parents = []
+        for (var chinpinName in chinpinJson) {
+            for (var child of chinpinJson[chinpinName].child) {
+                if (child.name === key) {
+                    parents.push({ "name": chinpinName, isTop: false });
+                }
+            }
+        }
+        return parents;
+    }
+    function uniqueList(list) {
+        map = Array.from(
+            new Map(list.map((item) => [item.name, item])).values()
+        );
+        result = [];
+        for (item of map) {
+            result.push(item);
+        }
+        return result;
+    }
+
+    const BOTTOM_FLOOR = ["米", "魚", "塩", "布", "油"];
+
+    function outputLine(key, select) {
+        let chinpin = chinpinJson[key];
+        if (!chinpin) {
+            return;
+        }
+        let result = '<li>';
+        result += outputBlock(key, chinpin.busyo, select);
+        // 子
+        if (chinpin.child.length > 0 && !BOTTOM_FLOOR.includes(key)) {
+            result += '<ul>';
+            for (child of chinpin.child) {
+                result += outputLine(child.name, select)
+            }
+            result += '</ul>';
+        }
+        result += '</li>';
+        return result;
+    }
+    function outputBlock(key, busyoList, select) {
+        // <div class="gear-boxes__item gear-box">
+        //     <div class="gear-box__header">
+        //         <div class="chinpin-box__title" id="first_name">錬丹書典</div>
+        //     </div>
+        //     <div class="gear-box__header">
+        //         <img id="first_image" src="./img/chinpin/錬丹書典.jpg" width="60" height="60">
+        //     </div>
+        //     <div class="gear-box__body">
+        //         <p class="chinpin-box__busyo" id="first_busyo">于吉<br>左慈</p>
+        //     </div>
+        // </div>
+        let result = '<div class="chinpin-box__item ';
+        if (key === select) {
+            // トップ
+            result += 'chinpin-box_select">';
+        } else {
+            result += 'chinpin-box">';
+        }
+        result += '<div class="chinpin-box__header">';
+        if (busyoList.length > 0) {
+            // トップ
+            result += '<div class="chinpin-box__title">' + key + '</div>';
+        } else {
+            result += '<div class="chinpin-box__title2">' + key + '</div>';
+        }
+        result += '</div>';
+        result += '<div class="chinpin-box__header">';
+        result += '<img src="./img/chinpin/' + key + '.jpg" width="30" height="30">';
+        result += '</div>';
+        if (busyoList.length > 0) {
+            let str = "";
+            for (var busyo of busyoList) {
+                if (str) {
+                    str += "<br>";
+                }
+                str += busyo;
+            }
+            result += '<div class="gear-box__body">';
+            result += '<p class="chinpin-box__busyo">' + str + '</p>';
+            result += '</div>';
+        }
+        result += '</div>';
+        return result;
+    }
+</script>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/reset.css">
+    <script src="json/chinpin.js"></script>
+    <title>珍品検索 </title>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="title">珍品検索</h1>
+        <div class="contents2">
+            <p> <b>使い方</b></p>
+            <p><font size="2">珍品か武将を選択してください。</font></p>
+            <p><font size="2">珍品を選んだ場合、指定の珍品(赤枠で表示)の親子関係を表示します。</font></p>
+            <p><font size="2">武将を選んだ場合、指定の武将の珍品の子以降を表示します。</font></p>
+            <br>
+            <div class="item2">
+                <label>珍品</label>
+                <div class="cp_ipselect cp_sl052">
+                    <select id="select_chinpin" onchange="changeSelect(this)" ;>
+                        <option value="Choose" hidden>Choose</option>
+                    </select>
+                </div>
+            </div>
+            <div class="item2">
+                <label>武将UR</label>
+                <div class="cp_ipselect cp_sl052">
+                    <select id="select_busyo_ur" onchange="changeSelect(this)" ;>
+                        <option value="Choose" hidden>Choose</option>
+                    </select>
+                </div>
+            </div>
+            <div class="item2">
+                <label>武将SSR</label>
+                <div class="cp_ipselect cp_sl052">
+                    <select id="select_busyo_ssr" onchange="changeSelect(this)" ;>
+                        <option value="Choose" hidden>Choose</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container2">
+        <div class="contents2" id="chinpinFlow">
+        </div>
+    </div>
+
+</body>
+
+</html>
