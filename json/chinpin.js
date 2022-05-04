@@ -46,6 +46,7 @@ const chinpinJson = {
             "曹操",
             "孫堅",
             "項羽",
+            "文鴦"
         ],
         "child": [
             {
@@ -169,7 +170,8 @@ const chinpinJson = {
         "busyoRank": "UR",
         "busyo": [
             "陸抗",
-            "陸遜"
+            "陸遜",
+            "郝昭"
         ],
         "child": [
             {
@@ -525,7 +527,8 @@ const chinpinJson = {
         "time": 10,
         "busyoRank": "SSR",
         "busyo": [
-            "蒙恬"
+            "蒙恬",
+            "彭越"
         ],
         "child": [
             {
@@ -734,7 +737,7 @@ const chinpinJson = {
             }
         ] 
     },
-    "銅帯鉤" : {
+    "羅漢杖" : {
         "max": 1000,
         "openLevel": 2,
         "time": 4,
@@ -750,7 +753,7 @@ const chinpinJson = {
             }
         ]
     },
-    "羅漢杖" : {
+    "銅帯鉤" : {
         "max": 1000,
         "openLevel": 2,
         "time": 4,
